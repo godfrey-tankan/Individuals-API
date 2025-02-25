@@ -8,6 +8,8 @@ from .serializers import IndividualSerializer, CustomUserSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.exceptions import NotFound,PermissionDenied
+from django.utils.timezone import now
+from datetime import timedelta
 
 class IndividualRetrieveView(generics.RetrieveAPIView):
     serializer_class = IndividualSerializer
