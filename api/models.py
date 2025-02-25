@@ -12,7 +12,6 @@ class CustomUser(AbstractUser):
         super().save(*args, **kwargs)
 
 class Individual(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     national_id = models.CharField(max_length=20, unique=True)
     age = models.IntegerField()
