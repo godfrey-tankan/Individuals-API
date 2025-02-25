@@ -1,4 +1,4 @@
-## **🚀 Secure Individual Data API – Authentication, Rate Limiting & Credit-Based Access**  
+## **Secure Individual Data API – Authentication, Rate Limiting & Credit-Based Access**  
 
 This is a **highly secure** API built using Django REST Framework that allows authorized users to **retrieve individual details** using a **National ID or phone number**. With built-in **authentication, API key validation, request limits, and premium access**, this API ensures **efficiency and security**.  
 
