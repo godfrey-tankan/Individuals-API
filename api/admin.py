@@ -8,4 +8,4 @@ class IndividualAdmin(admin.ModelAdmin):
     list_display = ["name", "national_id", "age", "phone_number", "address"]
     search_fields = ["name", "national_id", "phone_number"]
     list_filter = ["age"]
-    list_per_page = 10
+    list_per_page = 30

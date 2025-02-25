@@ -5,6 +5,9 @@ from django.db import models
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True)
     api_key = models.CharField(max_length=50, unique=True, blank=True, null=True)
+    is_premium = models.BooleanField(default=False)
+    credits = models.IntegerField(default=10)
+    last_request_time = models.DateTimeField(null=True, blank=True) 
 
     def save(self, *args, **kwargs):
         if not self.api_key:
