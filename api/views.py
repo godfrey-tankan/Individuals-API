@@ -7,6 +7,7 @@ from .models import Individual, CustomUser
 from .serializers import IndividualSerializer, CustomUserSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.exceptions import NotFound
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -21,11 +22,24 @@ class IndividualListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-class IndividualDetailView(generics.RetrieveAPIView):
-    queryset = Individual.objects.all()
+class IndividualRetrieveView(generics.RetrieveAPIView):
     serializer_class = IndividualSerializer
     permission_classes = [permissions.IsAuthenticated]
-    
+
+    def get_object(self):
+        national_id = self.request.query_params.get("national_id")
+        phone_number = self.request.query_params.get("phone_number")
+
+        if not national_id and not phone_number:
+            raise NotFound("Provide a National ID or Phone Number")
+
+        try:
+            if national_id:
+                return Individual.objects.get(national_id=national_id)
+            if phone_number:
+                return Individual.objects.get(phone_number=phone_number)
+        except Individual.DoesNotExist:
+            raise NotFound("No Individual found with the given details")
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
