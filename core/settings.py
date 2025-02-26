@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-nu2rq95^l^*fivvn0j86va!)-5*!ib5d4e_cys$ozgxyzdo6z2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://clava.co.zw',
+    'localhost',
+]
 
 
 # Application definition
@@ -52,9 +55,6 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ),
 }
-
-
-
 
 AUTH_USER_MODEL = "api.CustomUser"
 

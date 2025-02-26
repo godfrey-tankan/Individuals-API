@@ -18,15 +18,13 @@ class IndividualRetrieveView(generics.RetrieveAPIView):
     def get_object(self):
         user = self.request.user
 
-        if not user.is_premium:
-            if user.last_request_time:
-                time_since_last_request = now() - user.last_request_time
-                if time_since_last_request < timedelta(minutes=2):
-                    raise PermissionDenied("You must wait at least 2 minutes between requests.")
+        if not user.is_premium and user.last_request_time:
+            time_since_last_request = now() - user.last_request_time
+            if time_since_last_request < timedelta(minutes=2):
+                raise PermissionDenied("You must wait at least 2 minutes between requests.")
         
-        if not user.is_premium:
-            if user.credits <= 0:
-                raise PermissionDenied("You have run out of credits. Upgrade to premium for unlimited access.")
+        if not user.is_premium and user.credits <= 0:
+            raise PermissionDenied("You have run out of credits. Upgrade to premium for unlimited access.")
         
         national_id = self.request.query_params.get("national_id")
         phone_number = self.request.query_params.get("phone_number")
@@ -44,7 +42,6 @@ class IndividualRetrieveView(generics.RetrieveAPIView):
                 user.credits -= 1
                 user.last_request_time = now()
                 user.save()
-
             return individual
 
         except Individual.DoesNotExist:
